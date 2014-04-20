@@ -19,7 +19,7 @@ module Heartbeat
     end
 
     def log(message)
-      stream.puts( message )
+      stream.puts( "[#{Time.now}] #{message}" )
     end
   private
     def stream

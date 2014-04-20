@@ -12,10 +12,15 @@ describe Heartbeat::Logger do
   end
 
   describe ".log" do
+    before {
+      time = Time.now
+      Time.stub(now: time)
+    }
+
     context "when output stream is not configured" do
       it "should output to stdout" do
         klass.configure({ stream: nil })
-        expect( $stdout ).to receive(:puts).with("Test")
+        expect( $stdout ).to receive(:puts).with("[#{Time.now}] Test")
         klass.log( "Test" )
       end
     end
@@ -23,7 +28,7 @@ describe Heartbeat::Logger do
     context "when output stream is configured" do
       it "should output to to it" do
         klass.configure({ stream: file })
-        expect( file ).to receive(:puts).with("Test")
+        expect( file ).to receive(:puts).with("[#{Time.now}] Test")
         klass.log( "Test" )
       end
     end

@@ -1,21 +1,17 @@
 module Heartbeat
   class TimeoutHandler
-    attr_reader :alert_times, :counter
+    attr_reader :error_handler
 
-    def initialize(alert_times = [ 3, 10, 50, 100, 500 ].freeze)
-      @alert_times = alert_times
-      @counter     = 0
+    def initialize(error_handler = ErrorHandler.new)
+      @error_handler = error_handler
     end
 
     def trigger
-      @counter += 1
-      if alert_times.include?( counter )
-        Logger.log( "Number of timeouts exceeded. Sending notification" )
-      end
+      error_handler.register_error({ type: :timeout_error, details: {} })
     end
 
     def reset
-      @counter = 0
+      error_handler.reset
     end
   end
 end

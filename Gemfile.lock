@@ -6,7 +6,15 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
+    httpclient (2.3.4.1)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
     method_source (0.8.2)
+    mime-types (1.25.1)
+    polyglot (0.3.4)
+    pony (1.8)
+      mail (>= 2.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -21,6 +29,9 @@ GEM
     rspec-mocks (2.14.6)
     safe_yaml (1.0.2)
     slop (3.5.0)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
     webmock (1.17.4)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
@@ -29,6 +40,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  httpclient
+  pony
   pry
   rspec
   webmock

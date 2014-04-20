@@ -7,4 +7,13 @@ module SupportHelpers
   def klass
     described_class
   end
+
+  def configure_notifier
+    Heartbeat::Notifier.configure({
+      url:  "http://google.lv",
+      name: "Google",
+      notification_strategy: :fake,
+      strategy_settings: {}
+    })
+  end
 end

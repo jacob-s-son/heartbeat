@@ -4,22 +4,22 @@ describe Heartbeat::Monitor do
   let(:partial_options) {
     {
       url: "http://google.com",
-      name: "Google"
+      name: "Google",
+      notification_strategy: :fake,
+      notification_strategy_options: {}
     }
   }
 
   let(:full_options){
-    {
-      url: "http://google.com",
-      name: "Google",
+    partial_options.merge({
       description: "Searches things on the internet",
       frequency: 60,
       timeout: 10,
       success_codes: [ 200..299, 300..399 ]
-    }
+    })
   }
 
-  describe "#initialize" do
+  describe ".new" do
     context "no options specified" do
       subject { klass.new( {} ) }
 
@@ -60,6 +60,19 @@ describe Heartbeat::Monitor do
         expect(subject.timeout).to        eq 10
         expect(subject.success_codes).to  eq [ 200..299, 300..399 ]
       end
+    end
+  end
+
+  describe "#run" do
+    subject             { klass.new(partial_options.merge(frequency: 2) ) }
+    let(:live_checker)  { Heartbeat::LiveChecker.new(partial_options[:url], [ 200..299 ]) }
+    before { Heartbeat::LiveChecker.stub(new: live_checker) }
+
+    it "it should run LiveCheker five times in the loop" do
+      # expect(Heartbeat::Looper).to receive(:new)
+      expect(Heartbeat::LiveChecker).to receive(:new).and_return(live_checker)
+      expect(live_checker).to receive(:check).exactly(2).times
+      subject.run(2)
     end
   end
 end
