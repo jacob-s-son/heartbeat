@@ -1,8 +1,8 @@
 require './lib/heartbeat'
 
 options = {
-  url: "http://google.com",
-  name: "Google",
+  url: "http://localhost:4567/timeout",
+  name: "Sinatra app",
   notification_strategy: :email,
   notification_strategy_options: {
     to:           'jekabsons.edgars@gmail.com',

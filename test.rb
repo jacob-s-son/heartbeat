@@ -8,6 +8,10 @@ get '/error' do
   2 / 0
 end
 
-get 'timeout' do
-  sleep 300
+get '/timeout' do
+  if rand(10) % 10 == 0
+    sleep 300
+  else
+    "Now works"
+  end
 end
