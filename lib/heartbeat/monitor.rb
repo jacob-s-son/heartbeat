@@ -27,7 +27,7 @@ module Heartbeat
         notification_strategy: options[:notification_strategy],
         name:                  name,
         url:                   url,
-        strategy_options:      options[:notification_strategy_options]
+        strategy_settings:     options[:notification_strategy_options]
       })
     end
 

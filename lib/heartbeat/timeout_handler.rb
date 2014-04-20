@@ -13,5 +13,9 @@ module Heartbeat
     def reset
       error_handler.reset
     end
+
+    def counter
+      error_handler.counter
+    end
   end
 end

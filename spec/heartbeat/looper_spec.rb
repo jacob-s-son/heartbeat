@@ -36,6 +36,7 @@ describe Heartbeat::Looper do
     context "when after timeout next call succeeds" do
       subject {
         time = Time.now.to_i
+        timeout_handler.stub(counter: 1)
 
         # we preserve time inside block to get different sleep values
         klass.new( 2, 0.5, times, timeout_handler ) do
@@ -43,6 +44,7 @@ describe Heartbeat::Looper do
             sleep(0.6)
           else # otherwise everything is back to normal and we trigger counter
             sleep(0.1)
+            :success
           end
         end
       }

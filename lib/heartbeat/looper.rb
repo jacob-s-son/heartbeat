@@ -13,10 +13,10 @@ module Heartbeat
       last = Time.now
       while ( times_to_run.nil? ? true : times_to_run > 0 )
         begin
-          Timeout::timeout(timeout_in_seconds) do
+          status = Timeout::timeout(timeout_in_seconds) do
             yield
           end
-          timeout_handler.reset
+          timeout_handler.reset if status == :success && timeout_handler.counter > 0
         rescue Timeout::Error
           timeout_handler.trigger
         end

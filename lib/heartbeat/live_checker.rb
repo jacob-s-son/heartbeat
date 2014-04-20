@@ -10,13 +10,16 @@ module Heartbeat
 
     def check
       res = HTTPClient.get(@url)
-      unless request_successful?(res.status)
+      if request_successful?(res.status)
+        :success
+      else
         error_handler.register_error(
           {
             type: :status_error,
             details: { status: res.status, body: res.body  }
           }
         )
+        :error
       end
     end
 

@@ -1,5 +1,6 @@
 require 'pry'
 require 'timeout'
+require 'httpclient'
 require 'pony'
 
 module Heartbeat

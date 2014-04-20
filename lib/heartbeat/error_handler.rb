@@ -2,9 +2,9 @@ module Heartbeat
   class ErrorHandler
     attr_reader :stack, :counter, :alert_times
 
-    def initialize( alert_times = [ 3, 10, 50, 100, 500 ] )
-      @alert_times  = alert_times
-      reset
+    def initialize( alert_times = nil )
+      @alert_times  = alert_times || [ 3, 10, 50, 100, 500 ]
+      reset_vars
     end
 
     def register_error(error_hsh)
@@ -14,9 +14,13 @@ module Heartbeat
     end
 
     def reset
+      reset_vars
+      Notifier.notify(:back_to_normal)
+    end
+  private
+    def reset_vars
       @stack    = []
       @counter  = 0
-      Notifier.notify(:back_to_normal)
     end
   end
 end
